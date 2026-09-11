@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZX DEV - Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <!-- Image Modal Lightbox -->
+    <div id="image-modal" class="modal-overlay" onclick="closeImageModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modal-img" class="modal-content-img" src="" onclick="event.stopPropagation()">
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar left-sidebar">
+            <div class="logo">
+                <div class="glow-dot"></div>
+                <h1>ZX <span>DEV</span></h1>
+            </div>
+            <nav class="nav-buttons">
+                <button class="nav-btn active" onclick="filterCategory('all')"><i class="fas fa-home"></i> All Projects</button>
+                <div class="nav-divider">Categories</div>
+                <button class="nav-btn" onclick="filterCategory('cars')"><i class="fas fa-car"></i> Cars</button>
+                <button class="nav-btn" onclick="filterCategory('maps')"><i class="fas fa-map"></i> Maps</button>
+                <button class="nav-btn" onclick="filterCategory('weapons')"><i class="fas fa-crosshairs"></i> Weapons</button>
+                <button class="nav-btn" onclick="filterCategory('clothes')"><i class="fas fa-tshirt"></i> Clothes</button>
+                <button class="nav-btn" onclick="filterCategory('scripts')"><i class="fas fa-code"></i> Scripts</button>
+                
+                <div class="nav-divider">Account & Settings</div>
+                <button class="nav-btn" onclick="switchView('profile')"><i class="fas fa-user"></i> My Profile</button>
+                <button class="nav-btn admin-only" onclick="switchView('admin')" style="display:none; color: var(--danger-red);"><i class="fas fa-user-shield"></i> Admin Panel</button>
+                <button class="nav-btn theme-toggle-btn" onclick="toggleTheme()"><i class="fas fa-sun"></i> Light Theme</button>
+            </nav>
+            <div class="sidebar-footer" id="user-footer"></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="filters-container">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search projects..." oninput="renderProjects()">
+                    </div>
+                    <select id="type-filter" onchange="renderProjects()">
+                        <option value="all">All Types</option>
+                        <option value="free">Free</option>
+                        <option value="showcase">Showcase Only</option>
+                    </select>
+                </div>
+            </header>
+
+            <div id="views-container">
+                <!-- Browse View -->
+                <section id="view-browse" class="view-section">
+                    <div class="cards-grid" id="cards-container"></div>
+                </section>
+
+                <!-- Project Details View -->
+                <section id="view-project-details" class="view-section" style="display: none;">
+                    <button class="cyber-btn" onclick="switchView('browse')" style="margin-bottom:15px;">
+                        <i class="fas fa-arrow-left"></i> Back to Gallery
+                    </button>
+                    <div class="project-details-card" id="project-details-content"></div>
+                </section>
+
+                <!-- Profile View -->
+                <section id="view-profile" class="view-section" style="display: none;">
+                    <div class="profile-card">
+                        <div class="profile-header-bg"></div>
+                        <div class="profile-body">
+                            <img id="p-avatar" src="" class="profile-avatar" onclick="openImageModal(this.src)">
+                            <h2 id="p-name">--</h2>
+                            <div class="profile-divider"></div>
+                            <h3><i class="fas fa-award"></i> Assigned Roles</h3>
+                            <div class="roles-container" id="p-roles"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Admin Panel View -->
+                <section id="view-admin" class="view-section" style="display: none;">
+                    <h2><i class="fas fa-shield-alt"></i> Administration Panel</h2>
+                    
+                    <div class="admin-tabs" style="display:flex; gap:10px; margin: 20px 0;">
+                        <button class="cyber-btn active" onclick="switchAdminTab('projects')">Manage Projects</button>
+                        <button class="cyber-btn" onclick="switchAdminTab('users')">Manage Users & Bans</button>
+                    </div>
+
+                    <!-- Projects Tab -->
+                    <div id="admin-tab-projects" class="admin-panel">
+                        <h3 id="form-title" style="color:var(--accent-orange); margin-bottom:15px;">Add / Edit Project</h3>
+                        <form id="add-project-form" onsubmit="saveProjectForm(event)">
+                            <input type="hidden" id="ap-id">
+                            <input type="text" id="ap-title" placeholder="Project Title" required>
+                            <select id="ap-category">
+                                <option value="cars">Cars</option>
+                                <option value="maps">Maps</option>
+                                <option value="weapons">Weapons</option>
+                                <option value="clothes">Clothes</option>
+                                <option value="scripts">Scripts</option>
+                            </select>
+                            <select id="ap-type">
+                                <option value="free">Free</option>
+                                <option value="showcase">Showcase Only</option>
+                            </select>
+                            <input type="text" id="ap-thumb" placeholder="Thumbnail URL" required>
+                            <input type="text" id="ap-file" placeholder="Direct Download URL (ZIP / RAR)" required>
+                            <input type="text" id="ap-video" placeholder="Video URL (MP4)">
+                            <input type="text" id="ap-img1" placeholder="Gallery Image 1 URL">
+                            <input type="text" id="ap-img2" placeholder="Gallery Image 2 URL">
+                            <input type="text" id="ap-img3" placeholder="Gallery Image 3 URL">
+                            <textarea id="ap-desc" placeholder="Detailed Description" required></textarea>
+                            
+                            <label style="color:var(--text-muted); font-size:0.85rem;">Select Required Roles (Hold Ctrl/Cmd to select multiple):</label>
+                            <select id="ap-roles" multiple class="role-selector"></select>
+                            
+                            <div style="display:flex; gap:10px; margin-top:10px;">
+                                <button type="submit" class="cyber-btn">Save Project</button>
+                                <button type="button" class="cyber-btn" style="background:#444;" onclick="resetProjectForm()">Cancel & Clear</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div id="admin-tab-users" class="admin-panel" style="display:none;">
+                        <h3 style="color:var(--accent-orange); margin-bottom:15px;">Ban Management</h3>
+                        <div style="display:flex; gap:10px; margin-bottom:20px;">
+                            <input type="text" id="ban-user-id" placeholder="Enter Discord User ID" style="flex:1;">
+                            <button class="cyber-btn" style="background:var(--danger-red);" onclick="handleUserBan('ban')">Ban User</button>
+                            <button class="cyber-btn" style="background:var(--success-green); color:#000;" onclick="handleUserBan('unban')">Unban User</button>
+                        </div>
+                        <h4>Banned IDs List:</h4>
+                        <ul id="banned-list" style="margin-top:10px; padding-left:20px; color:var(--text-muted);"></ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

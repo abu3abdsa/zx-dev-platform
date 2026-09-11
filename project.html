@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -82,4 +83,90 @@
 
     <script src="project-app.js"></script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porsche 911 GT3 - RSV DEV</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="project-style.css">
+</head>
+<body>
+    <!-- الهيدر البسيط للعودة -->
+    <header class="project-header">
+        <div class="logo">RSV <span>DEV</span></div>
+        <button class="back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+    </header>
+
+    <main class="project-container">
+        <!-- القسم العلوي: تفاصيل المشروع والصور -->
+        <div class="project-grid">
+            
+            <!-- عمود الصور (مثل صفحة المنتج) -->
+            <div class="project-gallery">
+                <div class="main-image">
+                    <img src="https://via.placeholder.com/600x400/1a1a24/ff6600?text=Porsche+911+GT3" alt="Main Project Image" id="current-image">
+                </div>
+                <div class="thumbnail-list">
+                    <img src="https://via.placeholder.com/100x100/1a1a24/ff6600?text=1" class="thumb active" onclick="changeImage(this)">
+                    <img src="https://via.placeholder.com/100x100/1a1a24/ff6600?text=2" class="thumb" onclick="changeImage(this)">
+                    <img src="https://via.placeholder.com/100x100/1a1a24/ff6600?text=3" class="thumb" onclick="changeImage(this)">
+                </div>
+            </div>
+
+            <!-- عمود التفاصيل (العنوان، الوصف، صندوق التحميل) -->
+            <div class="project-info">
+                <div class="title-section">
+                    <h1>سيارة بورش 911 GT3 (FiveM Ready)</h1>
+                    <span class="badge"><i class="fas fa-check-circle"></i> متوفر ومحسن</span>
+                </div>
+                
+                <p class="description">
+                    مجسم سيارة عالي الجودة مخصص لسيرفرات فايف إم. يتميز بملف هندلينق واقعي، تكستشرز بدقة 4K، ويدعم التعديل الكامل في لوس سانتوس كاستمز. لا يسبب هبوط في الفريمات (Optimized).
+                </p>
+
+                <!-- صندوق التحميل (مستوحى من إضافة للسلة) -->
+                <div class="action-box">
+                    <div class="price-row">
+                        <span class="price">مـجـانـي</span>
+                        <span class="stats"><i class="fas fa-download"></i> 1,204 تحميل</span>
+                    </div>
+                    
+                    <!-- زر التحميل الذي يتحقق من تسجيل الدخول -->
+                    <button class="download-btn" id="download-btn" onclick="attemptDownload()">
+                        <i class="fas fa-cloud-download-alt"></i> تحميل المورد الآن
+                    </button>
+                    
+                    <p class="note"><i class="fas fa-shield-alt"></i> يتطلب تسجيل الدخول بحساب ديسكورد</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- القسم السفلي: المراجعات (مستوحى من الصورة الثانية) -->
+        <div class="reviews-section">
+            <h2>مراجعات المطورين واللاعبين</h2>
+            <div class="empty-reviews">
+                <i class="fas fa-comment-slash"></i>
+                <p>كن أول من يكتب مراجعة لهذا السكربت!</p>
+                <button class="write-review-btn">كتابة مراجعة</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- نافذة الخطأ المنبثقة (Error Modal) تظهر لغير المسجلين -->
+    <div id="error-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <i class="fas fa-exclamation-triangle error-icon"></i>
+            <h2>عذراً، لا يمكنك التحميل!</h2>
+            <p>يجب عليك تسجيل الدخول عبر حساب الديسكورد الخاص بك لتتمكن من تحميل الموارد وعرض معلوماتك.</p>
+            <button class="discord-login-btn"><i class="fab fa-discord"></i> تسجيل الدخول بواسطة Discord</button>
+        </div>
+    </div>
+
+    <script src="project-app.js"></script>
+</body>
+>>>>>>> 8b1b4d7bc3522d62526557207be08b3877e9f206
 </html>
